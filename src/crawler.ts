@@ -18,8 +18,8 @@ export default class Crawler {
             crawler.browser = await puppeteer.connect({
                 browserWSEndpoint: `wss://${process.env.USER}:${process.env.PASSWORD}@brd.superproxy.io:9222`,
             });
-        } catch {
-            console.log(`Failed to create browser for: ${url}.`);
+        } catch (e) {
+            console.log(`Failed to create browser for: ${url}`);
             return null;
         }
 
@@ -146,7 +146,7 @@ export default class Crawler {
         const websiteId = uuidv4();
         // Not really neccesary and quite unoptimised, but is fine for now. TODO: Fix this
         const websiteIdsBatch = words.map(() => websiteId);
-        const ranksBatch = words.map(() => this.rank);
+        const ranksBatch = words.map(() => String(this.rank));
 
         const wordIndiciesBatch = words.map((word) => wordIndicies[word]);
 
@@ -154,7 +154,7 @@ export default class Crawler {
             await QueryBuilder.insert(
                 "websites",
                 ["id", "title", "description", "url", "word_count", "rank"],
-                [websiteId, pageTitle, pageDescription, url, words.length, ranksBatch]
+                [websiteId, pageTitle, pageDescription, url, words.length, this.rank]
             );
 
             const { rows: keywordRows } = await QueryBuilder.insertManyOrUpdate(

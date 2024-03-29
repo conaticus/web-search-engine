@@ -47,8 +47,8 @@ export default class QueryBuilder {
     public static async query(query: string, data: any): Promise<QueryResult<any> | undefined> {
         try {
             return await pool.query(query, data);
-        } catch {
-            console.log("[WARNING]: Query failed");
+        } catch (e) {
+            console.log(`[WARNING]: Query failed - ${e}`);
         }
     }
 }

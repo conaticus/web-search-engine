@@ -3,7 +3,7 @@ import readline from "readline";
 import Crawler from "../crawler";
 import TaskThrottler from "./TaskThrottler";
 
-const SITE_LIMIT = 10_000;
+const SITE_LIMIT = 20_000;
 
 export default async function loadTopSites() {
     const fileStream = fs.createReadStream("top-1m.txt");
@@ -18,6 +18,8 @@ export default async function loadTopSites() {
 
     for await (const line of rl) {
         lineNumber++;
+        if (lineNumber <= 10_000) continue;
+
         if (lineNumber == SITE_LIMIT) break;
 
         const url = "https://" + line;
