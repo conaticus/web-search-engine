@@ -25,6 +25,8 @@ export default async function loadTopSites() {
         const url = "https://" + line;
 
         const task = (async () => {
+            lineNumber++;
+
             return new Promise(async (resolve) => {
                 try {
                     await taskThrottler.throttle();
