@@ -37,7 +37,7 @@ CREATE INDEX website_keyword_id ON website_keywords (keyword_id);
 In order to run this app. Be sure to create an `.env` file based on the `.env.example` file.
 
 - Clone the repository
-- `yarn i`
+- `yarn`
 - `yarn dev`
 
 This runs in conjunction with the other two repositories:
